@@ -15,11 +15,7 @@ pipeline {
                 }
             }
         }
-        stage('Security Testing with Aqua') {
-            steps { 
-                aquaMicroscanner imageName: 'mohit062000/cloudcapstone', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
-            }
-        }
+        
         stage('Upload image to Docker') {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
