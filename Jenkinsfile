@@ -64,7 +64,7 @@ pipeline {
 
         stage('Create the blue replication controller with its docker image') {
             steps {
-                withAWS(region:'us-west-2',credentials:'aws-static') {
+                withAWS(region:'us-west-2',credentials:'awsdeploy') {
                     sh '''
                         kubectl apply -f ./blue-controller.json
                     '''
@@ -73,7 +73,7 @@ pipeline {
         }
         stage('Create the green replication controller with its docker image') {
             steps {
-                withAWS(region:'us-west-2',credentials:'aws-static') {
+                withAWS(region:'us-west-2',credentials:'awsdeploy') {
                     sh '''
                         kubectl apply -f ./green-controller.json
                     '''
@@ -82,7 +82,7 @@ pipeline {
         }
         stage('Create the service in kubernetes cluster to the blue replication controller') {
             steps {
-                withAWS(region:'us-west-2',credentials:'aws-static') {
+                withAWS(region:'us-west-2',credentials:'awsdeploy') {
                     sh '''
                         # Create the service in kubernetes cluster in charge of routing traffic
                         # to the blue replication controller and exposing it to the outside
@@ -99,7 +99,7 @@ pipeline {
         }
         stage('Update the service to redirect to green by changing the selector to app=green') {
             steps {
-                withAWS(region:'us-west-2',credentials:'aws-static') {
+                withAWS(region:'us-west-2',credentials:'awsdeploy') {
                     sh '''
                         kubectl apply -f ./green-service.json
                     '''
@@ -108,7 +108,7 @@ pipeline {
         }
         stage('Check the application deployed in the cluster and its correct deployment') {
             steps {
-                withAWS(region:'us-west-2',credentials:'aws-static') {
+                withAWS(region:'us-west-2',credentials:'awsdeploy') {
                     sh '''
                         # Verify deployed application is running. Existing pods must be running.                        # must be running
                         kubectl get pods
