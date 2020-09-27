@@ -16,6 +16,12 @@ pipeline {
             }
         }
         
+        stage('Scanning Image') {
+        steps {
+            sysdig engineCredentialsId: 'sysdig-secure-api-credentials', name: 'mohit062000/cloudcapstone', inlineScanning: true
+        }
+       }
+        
         stage('Upload image to Docker') {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
@@ -30,25 +36,6 @@ pipeline {
             }
         }
 
-        stage('Create the kubernetes cluster') {
-            steps {
-                withAWS(region:'us-west-2',credentials:'awsdeploy') {
-                    sh 'echo "Create k8s cluster..."'
-                    sh '''
-                        eksctl create cluster \
-                        --name mohitcapstonecluster \
-                        --version 1.16 \
-                        --region us-west-2 \
-                        --nodegroup-name standard-workers \
-                        --node-type t2.micro \
-                        --nodes 3 \
-                        --nodes-min 1 \
-                        --nodes-max 4 \
-                        --managed
-                    '''
-                }
-            }
-        }
 
         stage('Create a configuration file for kubectl cluster') {
             steps {
