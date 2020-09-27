@@ -44,7 +44,8 @@ As a first  step, the Kubernetes cluster is created, as can be seen below. First
 
 From now on, the pipeline itself is run, and its stages are shown below.
 
-* Test application code using linting. Below is successful Linting screenshot :-
+* Test application code using linting. Below is noth successful & Unsuccesful Linting screenshot :-
+![1-UnSuccessfulLintingScreenshot](/projectscreenshots/4a.UnsuccessfulLinting.png)
 ![1-SuccessfulLintingScreenshot](/projectscreenshots/4.SuccesfulLinting.png)
 * Build a Docker image that containerizes the application, a simple Nginx one.
 ![2-BuildtheDockerImage](/projectscreenshots/5.SuccessDockerimageBuild.png)
